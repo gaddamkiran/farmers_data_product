@@ -1,0 +1,85 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: "Bronze layer containing raw ingested tables for the Farmers Data Platform."
+    database: ZURIENCH_FARMERS_DB
+    schema: BRONZE
+    tables:
+      - name: BZN_FARMERS_RAW
+        description: "Raw farmers master data ingested from source system."
+        columns:
+          - name: FARMER_ID
+            description: "Unique identifier assigned to each farmer."
+            tests:
+              - not_null
+
+          - name: FARMER_NAME
+            description: "Full name of the farmer."
+
+          - name: AGE
+            description: "Age of the farmer."
+
+          - name: PHONE
+            description: "Contact phone number of the farmer."
+
+          - name: STATE
+            description: "State where the farmer resides."
+
+          - name: CREATED_TS
+            description: "Record creation timestamp."
+
+          - name: UPDATED_TS
+            description: "Record last update timestamp."
+
+      - name: BZN_FARMS_RAW
+        description: "Raw data containing farmland details owned by farmers."
+        columns:
+          - name: FARM_ID
+            description: "Unique farm identifier."
+            tests:
+              - not_null
+
+          - name: FARMER_ID
+            description: "Reference to the farmer who owns the farm."
+
+          - name: AREA_ACRES
+            description: "Total area of the farm in acres."
+
+          - name: VILLAGE
+            description: "Village name where the farm is located."
+
+          - name: DISTRICT
+            description: "District name where the farm is located."
+
+          - name: STATE
+            description: "State where the farm is located."
+
+          - name: CREATED_TS
+            description: "Record creation timestamp."
+
+      - name: BZN_CROP_SALES_RAW
+        description: "Raw dataset containing crop sales transactions."
+        columns:
+          - name: SALE_ID
+            description: "Unique identifier for each crop sale."
+            tests:
+              - not_null
+
+          - name: FARM_ID
+            description: "Identifier of the farm associated with the sale."
+
+          - name: CROP_NAME
+            description: "Name of the crop sold."
+
+          - name: QUANTITY_KG
+            description: "Quantity sold in kilograms."
+
+          - name: SALE_AMOUNT
+            description: "Total amount earned from the sale."
+
+          - name: SALE_DATE
+            description: "Date of the crop sale."
+
+          - name: CREATED_TS
+            description: "Record creation timestamp."

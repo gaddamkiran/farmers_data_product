@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: farmer_crop_sales_summary
+    description: "Aggregated view summarizing crop sales performance across all farms and farmers. Provides metrics such as total sales, total quantity, and average sale amount by crop and state."
+
+    columns:
+      - name: FARM_ID
+        description: "Unique identifier for each farm."
+
+      - name: FARMER_ID
+        description: "Unique identifier for each farmer."
+
+      - name: CROP_NAME
+        description: "Name of the crop sold."
+        tests:
+          - not_null
+
+      - name: TOTAL_QUANTITY_KG
+        description: "Total quantity of crop sold in kilograms for the selected period."
+        tests:
+          - not_null
+
+      - name: TOTAL_SALE_AMOUNT
+        description: "Total sale amount generated from the crop."
+
+      - name: AVG_SALE_RATE
+        description: "Average sale rate per KG for the crop."
+
+      - name: FIRST_SALE_DATE
+        description: "Earliest sale date considered in the aggregation."
+
+      - name: LAST_SALE_DATE
+        description: "Latest sale date considered in the aggregation."
+
+      - name: STATE
+        description: "State where the farm is located."

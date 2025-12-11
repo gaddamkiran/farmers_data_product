@@ -1,0 +1,180 @@
+version: 2
+
+models:
+
+  # ============================
+  # HUB TABLES
+  # ============================
+  - name: hub_farmer
+    description: "Hub table storing unique natural keys of farmers."
+    columns:
+      - name: farmer_key
+        description: "Surrogate key generated for each farmer."
+        tests:
+          - unique
+          - not_null
+
+      - name: farmer_id
+        description: "Business key (natural key) of the farmer."
+        tests:
+          - not_null
+
+      - name: load_ts
+        description: "Timestamp when the farmer record was first loaded."
+
+      - name: record_source
+        description: "Source system that provided the farmer data."
+
+  - name: hub_farm
+    description: "Hub table storing unique farms."
+    columns:
+      - name: farm_key
+        description: "Surrogate key generated for each farm."
+        tests:
+          - unique
+          - not_null
+
+      - name: farm_id
+        description: "Business key (natural key) of the farm."
+        tests:
+          - not_null
+
+      - name: load_ts
+        description: "Timestamp when the farm record was first loaded."
+
+      - name: record_source
+        description: "Source of the farm data."
+
+  - name: hub_sales
+    description: "Hub table storing unique crop sales."
+    columns:
+      - name: sale_key
+        description: "Surrogate key of the sale event."
+        tests:
+          - unique
+          - not_null
+
+      - name: sale_id
+        description: "Business key of the sale."
+        tests:
+          - not_null
+
+      - name: load_ts
+        description: "Timestamp when sale record was loaded."
+
+      - name: record_source
+        description: "Source system of sale data."
+
+  # ============================
+  # LINK TABLES
+  # ============================
+  - name: link_farm_farmer
+    description: "Link table connecting farms to farmers (Farm ↔ Farmer)."
+    columns:
+      - name: farm_farmer_key
+        description: "Surrogate key for the farm-farmer relationship."
+        tests:
+          - unique
+          - not_null
+
+      - name: farm_key
+        description: "Foreign key referencing hub_farm."
+        tests:
+          - not_null
+
+      - name: farmer_key
+        description: "Foreign key referencing hub_farmer."
+        tests:
+      
+
+      - name: load_ts
+        description: "Load timestamp for the relationship."
+
+      - name: record_source
+        description: "Source of the relationship data."
+
+  - name: link_sale_farm_vw
+    description: "Link table mapping crop sales to farms (Sale ↔ Farm)."
+    columns:
+      - name: sale_farm_key
+        description: "Surrogate key for the sale-to-farm relationship."
+        tests:
+          - unique
+
+      - name: sale_key
+        description: "Foreign key referencing hub_sales."
+        tests:
+
+      - name: farm_key
+        description: "Foreign key referencing hub_farm."
+        tests:
+
+      - name: load_ts
+        description: "Load timestamp for the relationship."
+
+      - name: record_source
+        description: "Source system name."
+
+  # ============================
+  # SATELLITE TABLES
+  # ============================
+  - name: sat_farmer_details
+    description: "Satellite storing descriptive attributes for farmers."
+    columns:
+      - name: farmer_key
+        description: "FK referencing hub_farmer."
+        tests:
+
+      - name: farmer_name
+        description: "Name of the farmer."
+
+      - name: farmer_location
+        description: "Location or district of the farmer."
+
+      - name: load_ts
+        description: "Timestamp when the satellite record was loaded."
+
+      - name: record_source
+        description: "Source system identifier."
+
+  - name: sat_farm_details
+    description: "Satellite storing descriptive details of farms."
+    columns:
+      - name: farm_key
+        description: "FK referencing hub_farm."
+        tests:
+      - name: farm_size
+        description: "Size of farm in acres."
+
+      - name: soil_type
+        description: "Type of soil in the farm."
+
+      - name: load_ts
+        description: "Satellite load timestamp."
+
+      - name: record_source
+        description: "Source system name."
+
+  - name: sat_sales
+    description: "Satellite storing descriptive information about sales."
+    columns:
+      - name: sale_key
+        description: "FK referencing hub_sales."
+        tests:
+      - name: crop_type
+        description: "Type of crop sold."
+
+      - name: quantity_sold
+        description: "Quantity sold in KG/units."
+
+      - name: sale_amount
+        description: "Total sale amount."
+
+      - name: sale_date
+        description: "Date of sale."
+
+      - name: load_ts
+        description: "Timestamp when record was loaded."
+
+      - name: record_source
+        description: "Source of sales data."
