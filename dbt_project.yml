@@ -46,3 +46,13 @@ models:
 
     gold:
           +materialized: table
+
+
+vars:
+  # Source system identifiers
+  source_system: "ZURIENCH_FARMERS_DB"
+
+  # Schema names for layers
+  bronze_schema: "BRONZE"
+  silver_schema: "SILVER"
+  gold_schema: "GOLD"
