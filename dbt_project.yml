@@ -47,6 +47,11 @@ models:
     gold:
           +materialized: table
 
+# Optional: default configs for snapshots
+snapshots:
+  +target_schema: SILVER
+  +target_database: ZURIENCH_FARMERS_DB
+
 
 vars:
   # Source system identifiers
@@ -56,3 +61,4 @@ vars:
   bronze_schema: "BRONZE"
   silver_schema: "SILVER"
   gold_schema: "GOLD"
+
